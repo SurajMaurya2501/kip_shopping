@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kip_shooping/navbar.dart';
+import 'package:kip_shooping/view/filter.dart';
 import 'package:kip_shooping/view/first.dart';
 import 'package:kip_shooping/view/home.dart';
+import 'package:kip_shooping/view/course.dart';
 import 'package:kip_shooping/view/login.dart';
 import 'package:kip_shooping/view/screen5.dart';
 import 'package:kip_shooping/view/sign_up.dart';
@@ -43,5 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // return const SignUpScreen();
     // return const LoginScreen();
     return const CourseScreen();
+    // return const NavBar();
+    // return const HomePageScreen();
   }
 }
