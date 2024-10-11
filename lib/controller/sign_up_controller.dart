@@ -13,12 +13,11 @@ class SignUpController {
       customLoading(context, "Signing up..");
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      await userCredential.user!.sendEmailVerification();
       Navigator.pop(context);
       if (userCredential.user != null) {
-        userCredential.user!.updateDisplayName(userName);
-        sharedPref.storeNewUser(true);
-        Navigator.pushNamed(context, 'home');
+        sharedPref.storeNewUser(false);
+        sharedPref.storeData("email", email);
+        Navigator.pushNamed(context, 'nav');
       }
     } on FirebaseAuthException catch (e) {
       if (e.toString() ==
@@ -47,7 +46,6 @@ class SignUpController {
       if (userCredential.user != null) {
         sharedPref.storeNewUser(false);
         sharedPref.storeData("email", email);
-        sharedPref.storeData("userName", userCredential.user!.displayName!);
         Navigator.pushNamed(context, 'nav');
         print("Login Successfully!");
       }

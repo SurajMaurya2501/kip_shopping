@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kip_shooping/widgets/custom_button.dart';
 
 Color blue = const Color(0xFF3D5CFF);
@@ -14,10 +15,10 @@ void customLoading(BuildContext context, String text) async {
         children: [
           Container(
             height: 90,
-            width: 250,
+            width: 220,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
-              5.0,
+              20.0,
             )),
             child: Material(
               child: Dialog(
@@ -26,11 +27,13 @@ void customLoading(BuildContext context, String text) async {
                   children: [
                     const CircularProgressIndicator(),
                     SizedBox(
-                      width: 10.0,
+                      width: 5.0,
                     ),
                     Text(
                       text,
-                      style: const TextStyle(color: Colors.black),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 90, 90, 90),
+                          fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -70,7 +73,8 @@ void successDialogue(BuildContext context) async {
               ),
               Text(
                 "Congratulations, you have\ncompleted your registration!",
-                style: TextStyle(color: grey,
+                style: TextStyle(
+                  color: grey,
                 ),
               ),
               CustomButton(
@@ -88,6 +92,3 @@ void successDialogue(BuildContext context) async {
     },
   );
 }
-
-
-

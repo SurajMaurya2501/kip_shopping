@@ -45,7 +45,6 @@ class ProductController {
     } else {
       searchProduct(searchText, productDataList);
     }
-
     log("FilteredProduct : $filteredProduct");
   }
 

@@ -84,15 +84,11 @@ class LoginController {
     }
   }
 
-  Future<void> signOutGoogle() async {
+  Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
-    print("User signed out");
-  }
-
-  Future<void> signOutFacebook() async {
     await faceBookAuth.logOut();
-    await _auth.signOut();
+
     print("User signed out");
   }
 }

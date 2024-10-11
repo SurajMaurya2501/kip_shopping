@@ -9,6 +9,7 @@ import 'package:kip_shooping/view/home.dart';
 import 'package:kip_shooping/view/course.dart';
 import 'package:kip_shooping/view/login.dart';
 import 'package:kip_shooping/view/home.dart';
+import 'package:kip_shooping/view/logout.dart';
 import 'package:kip_shooping/view/sign_up.dart';
 import 'package:kip_shooping/widgets/pageroutebuilder.dart';
 import 'package:provider/provider.dart';
@@ -67,28 +68,29 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        // home: const MyHomePage(),
+        home: const MyHomePage(),
       ),
     );
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     // return const FirstPage();
-//     // return const SignUpScreen();
-//     // return const LoginScreen();
-//     // return const CourseScreen();
-//     // return const NavBar();
-//     // return const HomePageScreen();
-//     // return FilterPage();
-//   }
-// }
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    // return const FirstPage();
+    // return const SignUpScreen();
+    // return const LoginScreen();
+    // return const CourseScreen();
+    // return const NavBar();
+    // return const HomePageScreen();
+    // return FilterPage();
+    return LogoutScreen();
+  }
+}

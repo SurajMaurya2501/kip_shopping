@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kip_shooping/view/course.dart';
 import 'package:kip_shooping/view/home.dart';
+import 'package:kip_shooping/view/logout.dart';
+import 'package:kip_shooping/view/under_development.dart';
 import 'package:kip_shooping/widgets/common_widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -19,8 +21,8 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> _pages = [
     HomePageScreen(),
     CourseScreen(),
-    CourseScreen(),
-    CourseScreen(),
+    UnderDevelopment(),
+    LogoutScreen()
   ];
 
   @override
@@ -36,8 +38,7 @@ class _NavBarState extends State<NavBar> {
             child: BottomAppBar(
               color: Colors.white,
               padding: EdgeInsets.all(0.0),
-              shape:
-                  CircularNotchedRectangle(), 
+              shape: CircularNotchedRectangle(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -48,15 +49,15 @@ class _NavBarState extends State<NavBar> {
                   ),
                   buildNavBarItem(Icons.book, "Course", 1),
                   SizedBox(width: 20),
-                  buildNavBarItem(Icons.message_rounded, "Message", 3),
-                  buildNavBarItem(Icons.person, "Account", 4),
+                  buildNavBarItem(Icons.message_rounded, "Message", 2),
+                  buildNavBarItem(Icons.person, "Account", 3),
                 ],
               ),
             ),
           ),
           Positioned(
-            bottom: 25, 
-            left: MediaQuery.of(context).size.width * 0.4, 
+            bottom: 25,
+            left: MediaQuery.of(context).size.width * 0.4,
             child: CircleAvatar(
               backgroundColor: Colors.white,
               radius: 35,
@@ -68,7 +69,7 @@ class _NavBarState extends State<NavBar> {
                 child: SvgPicture.asset("assets/svg/search.svg"),
                 elevation: 4.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50), 
+                  borderRadius: BorderRadius.circular(50),
                 ),
               ),
             ),

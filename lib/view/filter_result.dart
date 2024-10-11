@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kip_shooping/controller/product_controller.dart';
 import 'package:kip_shooping/model/product_model.dart';
 import 'package:kip_shooping/provider/filer_provider.dart';
@@ -76,7 +77,16 @@ class _FilterResultState extends State<FilterResult> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 80.0),
+                    margin: EdgeInsets.only(top: 40.0),
+                    alignment: Alignment.centerLeft,
+                    child: SvgPicture.asset(
+                      "assets/svg/eye.svg",
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 40.0),
                     child: TextField(
                       controller: _controller,
                       style: const TextStyle(
@@ -441,8 +451,8 @@ class _FilterResultState extends State<FilterResult> {
                                       categories,
                                       widget.productDataList,
                                       _controller.text.trim(),
-                                      widget.startRange,
-                                      widget.endRange)
+                                      startValue,
+                                      endValue)
                                   .whenComplete(
                                 () {
                                   showDescriptionBool = List.generate(
@@ -457,8 +467,8 @@ class _FilterResultState extends State<FilterResult> {
                                       selectedCategories,
                                       widget.productDataList,
                                       _controller.text.trim(),
-                                      widget.startRange,
-                                      widget.endRange)
+                                      startValue,
+                                      endValue)
                                   .whenComplete(
                                 () {
                                   showDescriptionBool = List.generate(

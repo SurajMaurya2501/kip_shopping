@@ -81,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           usernameController.text.trim().isEmpty) {
                         return "Username is Required";
                       }
-                      return "";
+                      return null;
                     },
                     controller: usernameController,
                     title: "Username",
@@ -100,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return 'Enter a valid email';
                       }
 
-                      return "";
+                      return null;
                     },
                     controller: emailController,
                     title: "Your Email",
@@ -113,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           passController.text.trim().isEmpty) {
                         return "Password is Required";
                       }
-                      return "";
+                      return null;
                     },
                     controller: passController,
                     title: "Password",
@@ -122,22 +122,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomButton(
                     onTap: () {
-                      if (termsAndConditionCheck) {
-                        signUpController.signupWithEmail(
-                          emailController.text.trim(),
-                          passController.text.trim(),
-                          context,
-                          usernameController.text.trim(),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              "Accept Terms & Conditions to Continue",
+                      if (_formKey.currentState!.validate()) {
+                        if (termsAndConditionCheck) {
+                          signUpController.signupWithEmail(
+                            emailController.text.trim(),
+                            passController.text.trim(),
+                            context,
+                            usernameController.text.trim(),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Accept Terms & Conditions to Continue",
+                              ),
+                              backgroundColor: Colors.redAccent,
                             ),
-                            backgroundColor: Colors.redAccent,
-                          ),
-                        );
+                          );
+                        }
                       }
                     },
                     isWhiteColor: false,
