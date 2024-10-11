@@ -324,7 +324,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                       Text(
                                         "\$${product.price.toString()}",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,color: blue),
                                       )
                                     ],
                                   ),

@@ -280,7 +280,8 @@ class _FilterResultState extends State<FilterResult> {
                                                   "\$${product.price.toString()}",
                                                   style: TextStyle(
                                                       fontWeight:
-                                                          FontWeight.bold),
+                                                          FontWeight.bold,
+                                                      color: blue),
                                                 )
                                               ],
                                             ),
