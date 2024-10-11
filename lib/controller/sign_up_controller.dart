@@ -15,8 +15,9 @@ class SignUpController {
           .createUserWithEmailAndPassword(email: email, password: password);
       Navigator.pop(context);
       if (userCredential.user != null) {
-        sharedPref.storeNewUser(false);
+        sharedPref.storeNewUser(true);
         sharedPref.storeData("email", email);
+        await userCredential.user!.updateDisplayName(userName);
         Navigator.pushNamed(context, 'nav');
       }
     } on FirebaseAuthException catch (e) {
