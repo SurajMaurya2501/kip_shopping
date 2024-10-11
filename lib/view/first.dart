@@ -40,15 +40,24 @@ class FirstPage extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomButton(
+                onTap: () {
+                  Navigator.pushNamed(context, "signup");
+                },
                 isWhiteColor: false,
                 title: "Sign up",
                 width: 150,
               ),
+              SizedBox(
+                width: 20.0,
+              ),
               CustomButton(
+                onTap: () {
+                  Navigator.pushNamed(context, "login");
+                },
                 isWhiteColor: true,
                 title: "Log in",
                 width: 150,

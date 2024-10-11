@@ -48,7 +48,7 @@ class SignUpController {
         sharedPref.storeNewUser(false);
         sharedPref.storeData("email", email);
         sharedPref.storeData("userName", userCredential.user!.displayName!);
-        Navigator.pushNamed(context, 'home');
+        Navigator.pushNamed(context, 'nav');
         print("Login Successfully!");
       }
     } catch (e) {

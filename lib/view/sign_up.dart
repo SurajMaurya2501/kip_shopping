@@ -76,18 +76,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomTextField(
+                    validator: () {
+                      if (usernameController.text.trim() == null ||
+                          usernameController.text.trim().isEmpty) {
+                        return "Username is Required";
+                      }
+                      return "";
+                    },
                     controller: usernameController,
                     title: "Username",
                     isPassword: false,
                     showIcon: false,
                   ),
                   CustomTextField(
+                    validator: () {
+                      String pattern =
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                      RegExp regex = RegExp(pattern);
+                      if (emailController.text.trim() == null ||
+                          emailController.text.trim().isEmpty) {
+                        return "Email is Required";
+                      } else if (!regex.hasMatch(emailController.text.trim())) {
+                        return 'Enter a valid email';
+                      }
+
+                      return "";
+                    },
                     controller: emailController,
                     title: "Your Email",
                     isPassword: false,
                     showIcon: false,
                   ),
                   CustomTextField(
+                    validator: () {
+                      if (passController.text.trim() == null ||
+                          passController.text.trim().isEmpty) {
+                        return "Password is Required";
+                      }
+                      return "";
+                    },
                     controller: passController,
                     title: "Password",
                     isPassword: true,

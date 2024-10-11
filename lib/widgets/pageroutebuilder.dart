@@ -18,4 +18,3 @@ Route createRoute(Widget page) {
     },
   );
 }
-

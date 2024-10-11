@@ -6,6 +6,7 @@ import 'package:kip_shooping/model/product_model.dart';
 class ProductController {
   List<ProductModel> productListData = [];
   List<ProductModel> filteredProduct = [];
+  List<String> filterCategories = [];
 
   Future<void> getProductData() async {
     try {
@@ -26,12 +27,18 @@ class ProductController {
     }
   }
 
-  Future<void> filterProduct(List<String> categories,
-      List<ProductModel> productDataList, String searchText) async {
+  Future<void> filterProduct(
+      List<String> categories,
+      List<ProductModel> productDataList,
+      String searchText,
+      double startRange,
+      double endRange) async {
+    filterCategories.clear();
     filteredProduct.clear();
     if (searchText.isEmpty) {
       for (ProductModel product in productDataList) {
-        if (filterCategory(product.category, categories)) {
+        if (filterCategory(product.category, categories) &&
+            (product.price >= startRange && product.price <= endRange)) {
           filteredProduct.add(product);
         }
       }
@@ -46,6 +53,7 @@ class ProductController {
     for (ProductModel product in productDataList) {
       if (product.title.contains(searchText)) {
         filteredProduct.add(product);
+        filterCategories.add(product.category);
       }
     }
     print("Searched Result : $filteredProduct");
