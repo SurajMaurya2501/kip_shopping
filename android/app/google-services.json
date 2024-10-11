@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "788270611709",
+    "project_id": "kip-shopping",
+    "storage_bucket": "kip-shopping.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788270611709:android:b134caf00f04668e051294",
+        "android_client_info": {
+          "package_name": "com.example.kip_shooping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788270611709-3bsn58q70ccc4i052h4lv29bo4pg3mhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kip_shooping",
+            "certificate_hash": "7f600bbeb011fb72fde543961d2f9b45b5c2ff41"
+          }
+        },
+        {
+          "client_id": "788270611709-gott5fs9r4idtequ04ja0ekperedlvuk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeBqP3TTCEWUEJpWyZy0etcStBQp2ZqAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788270611709-gott5fs9r4idtequ04ja0ekperedlvuk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

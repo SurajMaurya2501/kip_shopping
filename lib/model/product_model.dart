@@ -6,13 +6,15 @@ class ProductModel {
   String description;
   double price;
   List<dynamic> images;
+  String category;
 
   ProductModel(
       {required this.id,
       required this.title,
       required this.description,
       required this.price,
-      required this.images});
+      required this.images,
+      required this.category});
 }
 
 List<ProductModel> mapToJson(List<dynamic> json) {
@@ -23,7 +25,8 @@ List<ProductModel> mapToJson(List<dynamic> json) {
         title: product['title'],
         description: product['description'],
         price: product['price'],
-        images: product['images']);
+        images: product['images'],
+        category: product['category']);
 
     productModelList.add(eachProduct);
   }

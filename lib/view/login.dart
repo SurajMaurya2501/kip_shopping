@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kip_shooping/controller/login_controller.dart';
+import 'package:kip_shooping/controller/sign_up_controller.dart';
 import 'package:kip_shooping/widgets/common_widgets.dart';
 import 'package:kip_shooping/widgets/custom_button.dart';
 import 'package:kip_shooping/widgets/custom_textfield.dart';
@@ -12,17 +14,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final signUpController = SignUpController();
   final _formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final loginController = LoginController();
   bool termsAndConditionCheck = false;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: const Color(0XFFF0F0F2),
-      child: ListView(
+    return Scaffold(
+      body: ListView(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -99,11 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     title: "Log in",
                     width: double.infinity,
                     onTap: () {
-                      customDialogue();
+                      signUpController.loginWithEmail(
+                          emailController.text.trim(),
+                          passController.text.trim(),
+                          context);
                     },
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    margin: const EdgeInsets.only(
+                      top: 20.0,
+                      bottom: 20.0,
+                    ),
                     child: RichText(
                       text: TextSpan(
                         children: [
@@ -115,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Container(
                               margin: const EdgeInsets.only(left: 5.0),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, "signup");
+                                },
                                 child: Text(
                                   "Sign up",
                                   style: TextStyle(
@@ -157,21 +169,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 25,
-                          child: Image.asset(
-                            "assets/images/google.png",
+                        GestureDetector(
+                          onTap: () {
+                            loginController.signInWithGoogle(context);
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 25,
+                            child: Image.asset(
+                              "assets/images/google.png",
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 30.0,
                         ),
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 25,
-                          child: Image.asset(
-                            "assets/images/fb.png",
+                        GestureDetector(
+                          onTap: () {
+                            loginController.signInWithFacebook(context);
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 25,
+                            child: Image.asset(
+                              "assets/images/fb.png",
+                            ),
                           ),
                         )
                       ],
@@ -183,42 +205,6 @@ class _LoginScreenState extends State<LoginScreen> {
           )
         ],
       ),
-    );
-  }
-
-  void customDialogue() async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SvgPicture.asset(
-                  "assets/svg/verified.svg",
-                  fit: BoxFit.cover,
-                ),
-                const Text(
-                  "Success",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                Text(
-                  "Congratulations, you have\ncompleted your registration!",
-                  style: TextStyle(color: grey),
-                ),
-                const CustomButton(
-                    title: "Done", isWhiteColor: false, width: double.infinity)
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

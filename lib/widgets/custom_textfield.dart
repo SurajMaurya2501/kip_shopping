@@ -36,6 +36,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           TextFormField(
             obscureText: widget.isPassword,
             controller: widget.controller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Field is Required';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               suffixIcon: widget.showIcon
                   ? IconButton(
@@ -59,6 +65,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
               focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  10.0,
+                ),
+                borderSide: const BorderSide(
+                  width: 0.2,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  10.0,
+                ),
+                borderSide: const BorderSide(
+                  width: 0.2,
+                ),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
                   10.0,
                 ),

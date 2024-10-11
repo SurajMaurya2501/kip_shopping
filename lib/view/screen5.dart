@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kip_shooping/controller/shared_preferences.dart';
 import 'package:kip_shooping/widgets/common_widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -13,19 +15,21 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  // @override
-  // void initState() {
-  //   SystemChrome.setSystemUIOverlayStyle(
-  //     SystemUiOverlayStyle.light.copyWith(
-  //       systemNavigationBarIconBrightness: Brightness.light,
-  //       systemNavigationBarColor: Colors.white,
-  //       statusBarIconBrightness: Brightness.dark,
-  //       statusBarColor: blue, // Note RED here
-  //     ),
-  //   );
+  final _auth = FirebaseAuth.instance;
+  final sharefPref = SharedPref();
+  bool isNewUser = false;
 
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    getNewUserBool().whenComplete(
+      () {
+        if (isNewUser) {
+          successDialogue(context);
+        }
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +43,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
             top: 0,
             child: Container(
                 height: MediaQuery.of(context).size.height * 0.22,
-                padding:
-                    const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
+                padding: const EdgeInsets.only(
+                  top: 40.0,
+                  left: 10.0,
+                  right: 10.0,
+                ),
                 color: blue,
                 child: ListTile(
                   trailing: SvgPicture.asset("assets/svg/user.svg"),
-                  title: const Text(
-                    "Hi, Kristin",
+                  title: Text(
+                    "Hi, ${_auth.currentUser?.displayName ?? "Kristin"}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -477,5 +484,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
       //     ),
       //   ),
     );
+  }
+
+  Future<void> getNewUserBool() async {
+    isNewUser = await sharefPref.getNewUser();
   }
 }

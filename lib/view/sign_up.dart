@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:kip_shooping/controller/sign_up_controller.dart';
 import 'package:kip_shooping/widgets/common_widgets.dart';
 import 'package:kip_shooping/widgets/custom_button.dart';
 import 'package:kip_shooping/widgets/custom_textfield.dart';
@@ -12,6 +13,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final signUpController = SignUpController();
   final _formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
@@ -20,9 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: const Color(0XFFF0F0F2),
-      child: ListView(
+    return Scaffold(
+      body: ListView(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -89,10 +90,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   CustomTextField(
                     controller: passController,
                     title: "Password",
-                    isPassword: false,
+                    isPassword: true,
                     showIcon: true,
                   ),
-                  const CustomButton(
+                  CustomButton(
+                    onTap: () {
+                      if (termsAndConditionCheck) {
+                        signUpController.signupWithEmail(
+                          emailController.text.trim(),
+                          passController.text.trim(),
+                          context,
+                          usernameController.text.trim(),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Accept Terms & Conditions to Continue",
+                            ),
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        );
+                      }
+                    },
                     isWhiteColor: false,
                     title: "Create account",
                     width: double.infinity,
@@ -130,7 +150,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Container(
                           margin: const EdgeInsets.only(left: 5.0),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushReplacementNamed(context, "login");
+                            },
                             child: Text(
                               "Log in",
                               style: TextStyle(

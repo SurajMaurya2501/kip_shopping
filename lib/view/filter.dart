@@ -1,25 +1,38 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:kip_shooping/controller/product_controller.dart';
+import 'package:kip_shooping/model/product_model.dart';
+import 'package:kip_shooping/provider/filer_provider.dart';
 import 'package:kip_shooping/widgets/common_widgets.dart';
 import 'package:kip_shooping/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class FilterPage extends StatefulWidget {
-  const FilterPage({super.key});
+  final List<ProductModel> productDataList;
+  const FilterPage({super.key, required this.productDataList});
 
   @override
   State<FilterPage> createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<FilterPage> {
+  final productController = ProductController();
+
   List<String> categories = [
-    'Design',
-    'Painting',
-    'Coding',
-    'Music',
-    'Visual Identity',
-    'Mathematics'
+    "beauty",
+    "laptops",
+    "skin-care",
+    "smartphones",
+    "sunglasses",
+    "tablets",
+    "womens-bags",
+    "fragrances"
   ];
-  List<String> selectedCategories = ['Design', 'Coding'];
+
+  double startValue = 0.0, endValue = 0.0;
+
+  List<String> selectedCategories = [];
 
   @override
   void initState() {
@@ -40,6 +53,7 @@ class _FilterPageState extends State<FilterPage> {
   }
 
   void _openBottomSheet(BuildContext context, String category) {
+    final provider = Provider.of<FilterProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -92,34 +106,38 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Wrap(
-                      spacing: 10.0, // Space between chips
-                      runSpacing: 10.0, // Space between lines when wrapped
-                      children: categories.map((category) {
-                        bool isSelected = selectedCategories.contains(category);
+                    child: Consumer<FilterProvider>(
+                      builder: (context, value, child) {
+                        return Wrap(
+                          spacing: 10.0, // Space between chips
+                          // runSpacing: 10.0, // Space between lines when wrapped
+                          children: categories.map((category) {
+                            bool isSelected =
+                                selectedCategories.contains(category);
 
-                        return ChoiceChip(
-                          side: const BorderSide(color: Colors.white),
-                          showCheckmark: false,
-                          label: Text(category),
-                          labelStyle: TextStyle(
-                            color: isSelected ? Colors.white : Colors.grey,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          selected: isSelected,
-                          selectedColor: const Color(0XFF3D5CFF),
-                          backgroundColor: Colors.grey[200],
-                          onSelected: (bool selected) {
-                            setState(() {
-                              if (selected) {
-                                selectedCategories.add(category);
-                              } else {
-                                selectedCategories.remove(category);
-                              }
-                            });
-                          },
+                            return ChoiceChip(
+                              side: const BorderSide(color: Colors.white),
+                              showCheckmark: false,
+                              label: Text(category),
+                              labelStyle: TextStyle(
+                                color: isSelected ? Colors.white : Colors.grey,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              selected: isSelected,
+                              selectedColor: const Color(0XFF3D5CFF),
+                              backgroundColor: Colors.grey[200],
+                              onSelected: (bool selected) {
+                                if (selected) {
+                                  selectedCategories.add(category);
+                                } else {
+                                  selectedCategories.remove(category);
+                                }
+                                provider.updateWidget();
+                              },
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
+                      },
                     ),
                   ),
                   Container(
@@ -130,27 +148,79 @@ class _FilterPageState extends State<FilterPage> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10.0),
-                    child: RangeSlider(
-                      activeColor: blue,
-                      labels: const RangeLabels("1000", "10000"),
-                      min: 0,
-                      max: 100000,
-                      values: const RangeValues(1000, 10000),
-                      onChanged: (value) {},
-                    ),
+                  Consumer<FilterProvider>(
+                    builder: (context, value, child) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 10.0),
+                        child: Stack(alignment: Alignment.topCenter, children: [
+                          RangeSlider(
+                            activeColor: blue,
+                            labels: RangeLabels(
+                              startValue.toString(),
+                              endValue.toString(),
+                            ),
+                            onChangeStart: (value) {
+                              startValue = value.start;
+                              print("${startValue}");
+                            },
+                            onChangeEnd: (value) {
+                              endValue = value.end;
+                              print("${endValue}");
+                            },
+                            min: 0,
+                            max: 100000,
+                            values: RangeValues(startValue, endValue),
+                            onChanged: (value) {
+                              startValue = value.start;
+                              endValue = value.end;
+                              provider.updateWidget();
+                            },
+                          ),
+                          Positioned(
+                            height: 50,
+                            width: 50,
+                            left: 0,
+                            top: 0,
+                            child: Text(
+                              '${startValue}',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.blue),
+                            ),
+                          ),
+                          Positioned(
+                            left: 40 + (endValue / 100) * 250,
+                            top: 35,
+                            child: Text(
+                              '${endValue}',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.blue),
+                            ),
+                          ),
+                        ]),
+                      );
+                    },
                   ),
                   const Spacer(),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       CustomButton(
                           title: "Cancel", isWhiteColor: true, width: 100),
                       CustomButton(
-                          title: "Apply Filter",
-                          isWhiteColor: false,
-                          width: 250)
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            "filterResult",
+                            arguments: {
+                              "productDataList": widget.productDataList,
+                              "selectedCategories": selectedCategories
+                            },
+                          );
+                        },
+                        title: "Apply Filter",
+                        isWhiteColor: false,
+                        width: 250,
+                      )
                     ],
                   )
                 ],
