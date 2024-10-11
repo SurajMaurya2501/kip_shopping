@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="app_name">Kip Shopping</string>
-<string name="facebook_app_id">1256678245760999</string>
-<string name="fb_login_protocol_scheme">fb1256678245760999</string>
-<string name="facebook_client_token">63916935ad0319cb4f5ca6041f7c0db3</string>
+<string name="facebook_app_id">553577893870813</string>
+<string name="fb_login_protocol_scheme">fb553577893870813</string>
+<string name="facebook_client_token">2836f3de8c58d3f2001305c135e10ae1</string>
 </resources>
 
 

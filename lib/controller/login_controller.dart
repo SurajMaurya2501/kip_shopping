@@ -6,6 +6,7 @@ import 'package:kip_shooping/controller/shared_preferences.dart';
 import 'package:kip_shooping/widgets/common_widgets.dart';
 
 class LoginController {
+  
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final faceBookAuth = FacebookAuth.instance;
@@ -19,10 +20,12 @@ class LoginController {
         return null;
       }
 
+      customLoading(context, "Loading");
+
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      customLoading(context, "");
+      Navigator.pop(context);
 
       final AuthCredential credential =
           GoogleAuthProvider.credential(accessToken: googleAuth.accessToken);
@@ -32,7 +35,7 @@ class LoginController {
       if (userCredential.user != null) {
         userCredential.user!.updateDisplayName(googleUser.displayName);
         sharedPref.storeData("email", userCredential.user!.email!);
-        Navigator.pushNamed(context, "home");
+        Navigator.pushNamed(context, "nav");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -55,24 +58,20 @@ class LoginController {
 
   Future<void> signInWithFacebook(BuildContext context) async {
     try {
-      // Trigger the Facebook sign-in process
+      
       final LoginResult result = await faceBookAuth.login();
 
-      // Check if login is successful
       if (result.status == LoginStatus.success) {
-        // Obtain the Facebook Auth Credential
         final OAuthCredential facebookAuthCredential =
             FacebookAuthProvider.credential(result.accessToken!.tokenString);
 
-        // Sign in to Firebase with the credential
         final UserCredential userCredential = await FirebaseAuth.instance
             .signInWithCredential(facebookAuthCredential);
         if (userCredential.user != null) {
           userCredential.user!
               .updateDisplayName(userCredential.user!.displayName);
-          // sharedPref.storeData("email", userCredential.user!.email!);
           print(userCredential.user!.email!);
-          Navigator.pushNamed(context, "home");
+          Navigator.pushNamed(context, "nav");
         }
       } else {
         print('Facebook login failed: ${result.status}');
