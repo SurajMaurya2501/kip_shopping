@@ -5,11 +5,10 @@ xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
         
 
-
     <application
-        android:label="kip_shooping"
+        android:label="Kip Shopping"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/kip_shopping">
         <activity
             android:name=".MainActivity"
             android:exported="true"
