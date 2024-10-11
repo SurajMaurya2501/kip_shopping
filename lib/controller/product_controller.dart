@@ -40,6 +40,9 @@ class ProductController {
         if (filterCategory(product.category, categories) &&
             (product.price >= startRange && product.price <= endRange)) {
           filteredProduct.add(product);
+          if (!filterCategories.contains(product.category)) {
+            filterCategories.add(product.category);
+          }
         }
       }
     } else {
@@ -52,7 +55,9 @@ class ProductController {
     for (ProductModel product in productDataList) {
       if (product.title.contains(searchText)) {
         filteredProduct.add(product);
-        filterCategories.add(product.category);
+        if (!filterCategories.contains(product.category)) {
+          filterCategories.add(product.category);
+        }
       }
     }
     print("Searched Result : $filteredProduct");

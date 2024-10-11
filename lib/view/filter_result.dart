@@ -144,26 +144,48 @@ class _FilterResultState extends State<FilterResult> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10.0,
-                    ),
-                    height: 50,
-                    alignment: Alignment.centerLeft,
-                    child: productController.filterCategories.length > 1
-                        ? ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount:
-                                productController.filterCategories.length,
-                            itemBuilder: (context, index) {
-                              return ChoiceChip(
-                                  label: Text(productController
-                                      .filterCategories[index]),
-                                  selected: false);
-                            },
-                          )
-                        : Container(),
+                  Consumer<FilterResultProvider>(
+                    builder: (context, value, child) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                          top: 10.0,
+                        ),
+                        height: 50,
+                        alignment: Alignment.centerLeft,
+                        child: productController.filterCategories.length > 0
+                            ? ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount:
+                                    productController.filterCategories.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      margin: EdgeInsets.only(right: 10.0),
+                                      child: ChoiceChip(
+                                        // side: const BorderSide(color: Colors.white),
+                                        side: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                        showCheckmark: false,
+                                        label: Text(
+                                          productController
+                                              .filterCategories[index],
+                                        ),
+                                        labelStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+
+                                        selected: false,
+                                        selectedColor: const Color(0XFF3D5CFF),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 152, 179, 252),
+                                      ));
+                                },
+                              )
+                            : Container(),
+                      );
+                    },
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
